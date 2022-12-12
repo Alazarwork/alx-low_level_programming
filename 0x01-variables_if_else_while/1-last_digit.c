@@ -79,8 +79,3 @@ int main(void)
 
 
 }
-
-Footer
-
-
-
