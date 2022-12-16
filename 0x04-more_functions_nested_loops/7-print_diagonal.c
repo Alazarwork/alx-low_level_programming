@@ -4,7 +4,6 @@
  * @n: input number of times '\' should be printed
  * Return: a diagonal
  */
-
 void print_diagonal(int n)
 {
 int co, sp;
