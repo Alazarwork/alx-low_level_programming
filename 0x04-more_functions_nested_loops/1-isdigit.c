@@ -1,8 +1,5 @@
-/**
- * File: 1-isdigit.c
- * Auth: Brennan D Baraban
- */
 #include "main.h"
+
 /**
  * _isdigit - Checks for a digit (0-9).
  * @c: The number to be checked.
