@@ -2,6 +2,7 @@
  * File: 1-alphabet.c
  * Auth: Brennan D Baraban
  */
+
 #include "main.h"
 
 /**
@@ -18,4 +19,5 @@ _putchar(letter);
 }
 
 _putchar('\n');
+
 }
