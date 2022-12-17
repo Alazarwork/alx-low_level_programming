@@ -1,22 +1,30 @@
-#include "main.h"
-
-/**
- * print_last_digit - a function that prints the last digit of a number
- * @nld: number's last digit result
- * Return: value of the last digit
+/** File: 8-24_hours.c
+ * Auth: Brennan D Baraban
  */
 
-int print_last_digit(int nld)
+#include "holberton.h"
+
+/**
+ * jack_bauer - Prints every minute of the day of
+ *
+ * Jack Bauer, starting from 00:00 to 23:59.
+ */
+
+void jack_bauer(void)
 
 {
-int pld;
-pld = (nld % 10);
-if (pld < 0)
+int hour, minute;
+for (hour = 0; hour <= 23; hour++)
 {
-pld = (-1 * pld);
+for (minute = 0; minute <= 59; minute++)
+{
+_putchar((hour / 10) + '0');
+_putchar((hour % 10) + '0');
+_putchar(':');
+_putchar((minute / 10) + '0');
+_putchar((minute % 10) + '0');
+_putchar('\n');
+																			
 }
-_putchar(pld + '0');
-
-return (pld);
-
+}
 }
