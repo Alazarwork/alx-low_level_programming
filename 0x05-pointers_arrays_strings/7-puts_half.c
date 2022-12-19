@@ -28,4 +28,3 @@ _putchar(str[k]);
 }
 _putchar('\n');
 }
-}
