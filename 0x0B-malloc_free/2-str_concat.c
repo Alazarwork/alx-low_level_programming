@@ -15,7 +15,9 @@ s1 = "";
 if (s2 == NULL)
 s2 = "";
 for (s1count = 0; s1[s1count]; s1count++)
+	;
 for (s2count = 0; s2[s2count]; s2count++)
+	;
 sizeBuffer = s1count + s2count + 1;
 p = malloc(sizeBuffer * sizeof(char));
 if (p == NULL)
