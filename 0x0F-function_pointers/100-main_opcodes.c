@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <udis86.h>
+
 /**
  * main - ...
  * @argc: ...
  * @argv: ...
  * Return: ...
  */
+
 int main(int argc, char *argv[])
+
 {
 ud_t ud_obj;
 int val = 0, i = 0;
