@@ -1,46 +1,40 @@
-/*
- * File: 7-insert_dnodeint.c
- * Auth: Brennan D Baraban
- */
-
-#include "lists.h"
-
 /**
- * insert_dnodeint_at_index - Inserts a new node in a dlistint_t
- *                            list at a given position.
- * @h: A pointer to the head of the dlistint_t list.
- * @idx: The position to insert the new node.
- * @n: The integer for the new node to contain.
+ * delete_dnodeint_at_index - Deletes a node from a dlistint_t
+ *                            at a given index.
+ * @head: A pointer to the head of the dlistint_t.
+ * @index: The index of the node to delete.
  *
- * Return: If the function fails - NULL.
- *         Otherwise - the address of the new node.
+ * Return: Upon success - 1.
+ *         Otherwise - -1.
  */
-dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
+int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 {
-	dlistint_t *tmp = *h, *new;
+	dlistint_t *tmp = *head;
 
-	if (idx == 0)
-		return (add_dnodeint(h, n));
+	if (*head == NULL)
+		return (-1);
 
-	for (; idx != 1; idx--)
+	for (; index != 0; index--)
 	{
-		tmp = tmp->next;
 		if (tmp == NULL)
-			return (NULL);
+			return (-1);
+		tmp = tmp->next;
 	}
 
-	if (tmp->next == NULL)
-		return (add_dnodeint_end(h, n));
+	if (tmp == *head)
+	{
+		*head = tmp->next;
+		if (*head != NULL)
+			(*head)->prev = NULL;
+	}
 
-	new = malloc(sizeof(dlistint_t));
-	if (new == NULL)
-		return (NULL);
+	else
+	{
+		tmp->prev->next = tmp->next;
+		if (tmp->next != NULL)
+			tmp->next->prev = tmp->prev;
+	}
 
-	new->n = n;
-	new->prev = tmp;
-	new->next = tmp->next;
-	tmp->next->prev = new;
-	tmp->next = new;
-
-	return (new);
+	free(tmp);
+	return (1);
 }
