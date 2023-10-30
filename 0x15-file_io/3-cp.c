@@ -1,93 +1,53 @@
 #include <stdio.h>
-#include <string.h>
-#include <stddef.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include "holberton.h"
 
 /**
- *  * close_status - function
- *   * @fd: file constructor
- *    * Return: Nothing.
- *     */
-void close_status(int fd)
-{
-		int status = close(fd);
+* main - program that copies the content of a file to another file
+* @argc: num argument
+* @argv: string argument
+* Return: 0
+*/
 
-			if (status == -1)
-					{
-								dprintf(STDERR_FILENO, "Error: Can't close fd %i", status);
-										exit(100);
-											}
+int main(int argc, char *argv[])
+{
+int file_from, file_to;
+int num1 = 1024, num2 = 0;
+char buf[1024];
+
+if (argc != 3)
+	dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
+file_from = open(argv[1], O_RDONLY);
+if (file_from == -1)
+{
+	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+	exit(98);
+}
+file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR
+	| S_IRGRP | S_IWGRP | S_IROTH);
+if (file_to == -1)
+{
+	dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+	close(file_from), exit(99);
+}
+while (num1 == 1024)
+{
+	num1 = read(file_from, buf, 1024);
+	if (num1 == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
+	num2 = write(file_to, buf, num1);
+	if (num2 < num1)
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
 }
 
-/**
- *  * write_buffer - function
- *   * @dest: @buffer dest
- *    * @buffer: buffer to write in @dest 1024 bytes
- *     * @size: size of @buffer
- *      * @av: arguments in main
- *       * Return: Nothing.
- *        */
-void write_buffer(int dest, char buffer[1024], int size, char **av)
-{
-		if (size == -1)
-				{
-							dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
-									exit(98);
-										}
+if (close(file_from) == -1)
+	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from), exit(100);
 
-			if (write(dest, buffer, size) == -1)
-					{
-								dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
-										exit(99);
-											}
-}
+if (close(file_to) == -1)
+	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_to), exit(100);
 
-/**
- *  * main - check the code
- *   * @ac: number of element in **av
- *    * @av: array
- *     * Return: Always 0.
- *      */
-int main(int ac, char **av)
-{
-		int src;
-			int dest;
-				char buffer[1024];
-					int size = 1;
-
-						if (ac != 3)
-								{
-											dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-													exit(97);
-														}
-
-							src = open(av[1], O_RDONLY, 0664);
-
-								if (src == -1)
-										{
-													dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
-															exit(98);
-																}
-
-									dest = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-
-										if (dest == -1)
-												{
-															dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
-																	exit(99);
-																		}
-
-											while (size != 0)
-													{
-																size = read(src, buffer, 1024);
-																		write_buffer(dest, buffer, size, av);
-																			}
-
-												close_status(src);
-													close_status(dest);
-														return (0);
+return (0);
 }
